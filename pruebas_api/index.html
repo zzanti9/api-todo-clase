@@ -8,9 +8,12 @@
 <body>
     <script>
 
+        let tarea = "aprender otro";
+
+
         fetch("/api-todo/crear",{
             method : "POST",
-            body : '{ "tarea" : "valido" }',
+            body : JSON.stringify({tarea}),
             headers : {
                 "Content-type" : "application/json"
             }
