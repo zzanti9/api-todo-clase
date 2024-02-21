@@ -71,4 +71,48 @@ function borrarTarea(id){
 
     });
 }
-module.exports = {getTareas,crearTarea,borrarTarea};
+
+function actualizarEstado(id){
+    return new Promise(async (ok,ko) => {
+
+        let conexion = conectar();
+
+        try{
+            let {count} = await conexion`UPDATE tareas SET terminada = NOT terminada WHERE id = ${id}`;
+            //cuando borro o actualizo el ARRAY esta vacio, pero le puedo extraer el count y me dira cuantas cosas ha hecho efecto la consulta// 
+
+            conexion.end();
+
+            ok(count);
+
+        }catch(error){
+
+            ko({ error : "error en base de datos" });
+        }
+
+    });
+}
+
+function actualizarTarea(id,tarea){
+    return new Promise(async (ok,ko) => {
+
+        let conexion = conectar();
+
+        try{
+            let {count} = await conexion`UPDATE tareas SET terminada = ${tarea} WHERE id = ${id}`;
+            //cuando borro o actualizo el ARRAY esta vacio, pero le puedo extraer el count y me dira cuantas cosas ha hecho efecto la consulta// 
+
+            conexion.end();
+
+            ok(count);
+
+        }catch(error){
+
+            ko({ error : "error en base de datos" });
+        }
+
+    });
+}
+
+
+module.exports = {getTareas,crearTarea,borrarTarea,actualizarEstado,actualizarTarea};
